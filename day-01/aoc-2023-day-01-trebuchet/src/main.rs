@@ -7,8 +7,8 @@ fn main() {
     if let Ok(lines) = read_lines("./aoc-2023-day-01-input.txt") {
         // Consumes the iterator, returns an (Optional) String.
         for line in lines {
-            if let Ok(ip) = line {
-                println!("{}", ip);
+            if let Ok(amended_line) = line {
+                println!("{}", amended_line);
             }
         }
     }
