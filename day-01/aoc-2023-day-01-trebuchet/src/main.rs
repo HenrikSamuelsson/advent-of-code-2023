@@ -3,24 +3,31 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 fn main() {
-    // File aoc-2023-day-01-input.txt must exist in the current path.
+    // File aoc-2023-day-01-example-input.txt must exist in the current path.
     if let Ok(lines) = read_lines("./aoc-2023-day-01-example-input.txt") {
         // Consumes the iterator, returns an (Optional) String.
         let mut sum = 0;
         for line in lines {
             let mut first_digit = 0;
             let mut last_digit = 0;
+            let mut missing_first_digit = true;
             if let Ok(amended_line) = line {
                 println!("{}", amended_line);
                 for c in amended_line.chars() {
-                    if  c.is_numeric() {
-                        first_digit = c.to_digit(10).unwrap();
-                        println!("first_digit = {}", c);
-                        break;
+                    if c.is_numeric() {
+                        if missing_first_digit {
+                            first_digit = c.to_digit(10).unwrap();
+                            missing_first_digit = false;
+                        }
+                        last_digit = c.to_digit(10).unwrap();
                     }
                 }
+                println!("first_digit = {}", first_digit);
+                println!("last_digit = {}", last_digit);
+                sum += 10 * first_digit + last_digit;
             }
         }
+        println!("Answer part 1 = {}", sum);
     }
     else {
         println!("Error reading lines from file.");
