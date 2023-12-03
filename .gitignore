@@ -13,5 +13,5 @@ Cargo.lock
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
-# My input data
-day-01/aoc-2023-day-01-trebuchet/aoc-2023-day-01-my-input.txt
+# Personal puzzle input
+persnoal-puzzle-input.txt

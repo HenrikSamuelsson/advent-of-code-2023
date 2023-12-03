@@ -4,7 +4,7 @@ use std::path::Path;
 
 fn main() {
     // File must exist in the current path.
-    if let Ok(lines) = read_lines("./aoc-2023-day-01-my-input.txt") {
+    if let Ok(lines) = read_lines("./example-puzzle-input.txt") {
         // Consumes the iterator, returns an (Optional) String.
         let mut sum = 0;
         for line in lines {
