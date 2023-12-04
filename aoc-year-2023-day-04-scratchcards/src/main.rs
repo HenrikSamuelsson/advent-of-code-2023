@@ -6,7 +6,9 @@ fn main() {
     // File must exist in the current path.
     if let Ok(lines) = read_lines("./example-puzzle-input.txt") {
         for line in lines {
-            println!("{:?}", line);
+            if let Ok(scratch_card) = line {
+                println!("{}", scratch_card);
+            }
         }
     } else {
         println!("Error reading lines from file.");
