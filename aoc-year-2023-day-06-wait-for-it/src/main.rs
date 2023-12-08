@@ -4,6 +4,6 @@ fn main() {
     let d1 = 9;
 }
 
-fn numOfWaysToWin(time: u32, distance: u32) -> u32 {
+fn num_of_ways_to_win(time: u32, distance: u32) -> u32 {
 
 }
