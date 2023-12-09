@@ -8,23 +8,16 @@ fn main() {
         // Consumes the iterator, returns an (Optional) String.
         let mut sum = 0;
         for line in lines {
-            let mut first_digit = 0;
-            let mut last_digit = 0;
-            let mut missing_first_digit = true;
+            let first_digit;
+            let last_digit;
             if let Ok(amended_line) = line {
                 println!("{}", amended_line);
                 first_digit = find_first_digit(&amended_line);
-                for c in amended_line.chars() {
-                    if c.is_numeric() {
-                        if missing_first_digit {
-                            first_digit = c.to_digit(10).unwrap();
-                            missing_first_digit = false;
-                        }
-                        last_digit = c.to_digit(10).unwrap();
-                    }
-                }
+                last_digit = find_last_digit(&amended_line);
+ 
                 println!("first_digit = {}", first_digit);
                 println!("last_digit = {}", last_digit);
+                
                 sum += 10 * first_digit + last_digit;
             }
         }
@@ -43,9 +36,21 @@ where P: AsRef<Path>, {
     Ok(io::BufReader::new(file).lines())
 }
 
-/// Returns the first digit found in the given string.
+/// Finds the first digit in a given string.
+/// Note, will return 0 if no digit is found in the string.
 fn find_first_digit(text: &str) -> u32 {
     for c in text.chars() {
+        if c.is_numeric() {
+            return c.to_digit(10).unwrap();
+        }
+    }
+    0
+}
+
+/// Finds the last digit in a given string.
+/// Note, will return 0 if no digit is found in the string.
+fn find_last_digit(text: &str) -> u32 {
+    for c in text.chars().rev() {
         if c.is_numeric() {
             return c.to_digit(10).unwrap();
         }
