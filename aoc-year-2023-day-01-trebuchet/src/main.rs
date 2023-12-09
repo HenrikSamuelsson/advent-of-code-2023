@@ -13,6 +13,7 @@ fn main() {
             let mut missing_first_digit = true;
             if let Ok(amended_line) = line {
                 println!("{}", amended_line);
+                first_digit = find_first_digit(&amended_line);
                 for c in amended_line.chars() {
                     if c.is_numeric() {
                         if missing_first_digit {
@@ -40,4 +41,14 @@ fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where P: AsRef<Path>, {
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
+}
+
+/// Returns the first digit found in the given string.
+fn find_first_digit(text: &str) -> u32 {
+    for c in text.chars() {
+        if c.is_numeric() {
+            return c.to_digit(10).unwrap();
+        }
+    }
+    0
 }
