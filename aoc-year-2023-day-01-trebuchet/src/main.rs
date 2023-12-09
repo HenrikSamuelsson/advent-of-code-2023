@@ -14,16 +14,15 @@ fn main() {
                 println!("{}", amended_line);
                 first_digit = find_first_digit(&amended_line);
                 last_digit = find_last_digit(&amended_line);
- 
+
                 println!("first_digit = {}", first_digit);
                 println!("last_digit = {}", last_digit);
-                
+
                 sum += 10 * first_digit + last_digit;
             }
         }
         println!("Answer part 1 = {}", sum);
-    }
-    else {
+    } else {
         println!("Error reading lines from file.");
     }
 }
@@ -31,7 +30,9 @@ fn main() {
 // The output is wrapped in a Result to allow matching on errors.
 // Returns an Iterator to the Reader of the lines of the file.
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where P: AsRef<Path>, {
+where
+    P: AsRef<Path>,
+{
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
 }
@@ -56,4 +57,47 @@ fn find_last_digit(text: &str) -> u32 {
         }
     }
     0
+}
+
+/// Finds letter combinations corresponding to one digit numbers at the start of a given string.
+fn parse_number_at_start(text: &str) -> Option<u32> {
+    const NUMBERS: [&str; 10] = [
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    ];
+    for (i, n) in NUMBERS.iter().enumerate() {
+        if text.starts_with(n) {
+            return Some(i as u32);
+        }
+    }
+    None
+}
+
+/// Finds letter combinations corresponding to one digit numbers at the end of a given string.
+fn parse_number_at_end(text: &str) -> Option<u32> {
+    const NUMBERS: [&str; 10] = [
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    ];
+    for (i, n) in NUMBERS.iter().enumerate() {
+        if text.ends_with(n) {
+            return Some(i as u32);
+        }
+    }
+    None
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::parse_number_at_start;
+    use crate::parse_number_at_end;
+
+    const LINE_TWO1NINE: &str = "two1nine";
+    const LINE_1TWO1: &str = "1two1";
+
+    #[test]
+    fn parse_number_test() {
+        assert_eq!(parse_number_at_start(&LINE_TWO1NINE), Some(2));
+        assert_eq!(parse_number_at_end(&LINE_TWO1NINE), Some(9));
+        assert_eq!(parse_number_at_start(&LINE_1TWO1), None);
+        assert_eq!(parse_number_at_end(&LINE_1TWO1), None);
+    }
 }
