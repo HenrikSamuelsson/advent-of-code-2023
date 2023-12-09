@@ -8,6 +8,8 @@ fn main() {
         for line in lines {
             if let Ok(scratch_card) = line {
                 println!("{}", scratch_card);
+                let cropped = crop_letters(&scratch_card, 7);
+                println!("{cropped}");
             }
         }
     } else {
@@ -23,4 +25,11 @@ where
 {
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
+}
+
+fn crop_letters(s: &str, pos: usize) -> &str {
+    match s.char_indices().skip(pos).next() {
+        Some((pos, _)) => &s[pos..],
+        None => "",
+    }
 }
