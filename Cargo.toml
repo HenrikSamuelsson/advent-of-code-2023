@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "aoc-year-2023-day-01-trebuchet",
+    "aoc-year-2023-day-02-cube-conundrum",
+    "aoc-year-2023-day-03-gear-ratios",
+    "aoc-year-2023-day-04-scratchcards",
+    "aoc-year-2023-day-05-if-you-give-a-seed-a-fertilizer",
+    "aoc-year-2023-day-06-wait-for-it",
+]
