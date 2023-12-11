@@ -1,13 +1,25 @@
-const EXAMPLE_INPUT: &str = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
-     Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
-     Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
-     Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-     Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
+use std::error::Error;
+use std::fs::File;
+use std::io::BufReader;
+use std::io::prelude::*;
+use std::path::Path;
 
 fn main() {
-    println!("Hello, world!");
-}
+     // Create a path to the desired file
+     let path = Path::new("example-puzzle-input.txt");
+     let display = path.display();
 
-pub fn solve_part_1(input_text: &str) -> u32 {
-    0
+     // Open the path in read-only mode, returns `io::Result<File>`
+    let file = match File::open(&path) {
+        // The `description` method of `io::Error` returns a string that describes the error
+        Err(why) => panic!("couldn't open {}: {}", display, <dyn Error>::to_string(&why)),
+        Ok(file) => file,
+    };
+
+    let reader = BufReader::new(file);
+    let lines = reader.lines();
+
+    for line in lines {
+        println!("{:?}", line);
+    }
 }
