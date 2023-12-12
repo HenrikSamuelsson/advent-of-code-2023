@@ -4,9 +4,11 @@ use std::io::BufReader;
 use std::io::prelude::*;
 use std::path::Path;
 
+const EXAMPLE_PUZZLE_INPUT_FILE: &str = "example-puzzle-input.txt";
+
 fn main() {
      // Create a path to the desired file
-     let path = Path::new("example-puzzle-input.txt");
+     let path = Path::new(EXAMPLE_PUZZLE_INPUT_FILE);
      let display = path.display();
 
      // Open the path in read-only mode, returns `io::Result<File>`
@@ -22,4 +24,13 @@ fn main() {
     for line in lines {
         println!("{:?}", line);
     }
+}
+
+pub fn solve_part_1(input_text: &str) -> u32 {
+    0
+}
+
+#[test]
+    fn test_solve_part_1() {
+        assert_eq!(solve_part_1(&EXAMPLE_PUZZLE_INPUT_FILE), 8)
 }
