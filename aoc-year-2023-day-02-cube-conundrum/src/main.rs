@@ -7,13 +7,17 @@ use std::path::Path;
 /// Name of file with example input given in the puzzle description.
 const EXAMPLE_PUZZLE_INPUT_FILE: &str = "example-puzzle-input.txt";
 
+/// Name of file holding personal puzzle input.
+const PERSONAL_PUZZLE_INPUT_FILE: &str = "personal-puzzle-input.txt";
+
 /// Number of available cubes by colour according to puzzle description.
-const RED_CUBE_COUNT: i32 = 12;
-const GREEN_CUBE_COUNT: i32 = 13;
-const BLUE_CUBE_COUNT: i32 = 14;
+const RED_CUBE_COUNT: u32 = 12;
+const GREEN_CUBE_COUNT: u32 = 13;
+const BLUE_CUBE_COUNT: u32 = 14;
 
 fn main() {
-    solve_part_1(EXAMPLE_PUZZLE_INPUT_FILE);
+    let result_part_1 = solve_part_1(PERSONAL_PUZZLE_INPUT_FILE);
+    println!("Result part 1 = {}", result_part_1);
 }
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
@@ -32,6 +36,8 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
     let lines = reader.lines();
 
     for line in lines {
+        let mut valid_cube_count = true;
+        let mut game_id_number: u32 = 0;
         if let Ok(game_record) = line {
             // Split the game record into two parts.
             let mut game_record_parts = game_record.split(":");
@@ -40,10 +46,10 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
             let game_id = game_record_parts.next();
             let mut game_id_parts = game_id.expect("GAME ID").split(" ");
             assert_eq!(Some("Game"), game_id_parts.next());
-            let game_id_number: u32 = game_id_parts.next().expect("ID NUMBER").parse().unwrap();
+            game_id_number = game_id_parts.next().expect("ID NUMBER").parse().unwrap();
             
             // Start checking the cube counts in the second game record part.
-            let mut valid_cube_count = true;
+            
             let cube_counts = game_record_parts.next();
             // Split on semicolon gives a set of cubes, possibly in different colours.
             let cube_sets = cube_counts.expect("CUBE SET").split(";");
@@ -59,13 +65,22 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                     let cube_colour = cube_count.next();
                     if let Some(colour) = cube_colour { 
                         println!("{:?}", colour);
+                        match colour {
+                            "blue" => if num_of_cubes > BLUE_CUBE_COUNT {valid_cube_count = false},
+                            "green" => if num_of_cubes > GREEN_CUBE_COUNT {valid_cube_count = false},
+                            "red" => if num_of_cubes > RED_CUBE_COUNT {valid_cube_count = false},
+                            _ => println!("Unexpected colour",)
+                        }
                     }
                 }
                 println!("");
             }
         }
+        if valid_cube_count {
+            result += game_id_number;
+        }
     }
-    0
+    result
 }
 
 #[test]
