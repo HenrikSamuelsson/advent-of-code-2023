@@ -67,10 +67,8 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                     let mut cube_count = cubes_in_one_colour.split(" ");
                     cube_count.next(); // Hack to get rid of initial empty part.
                     let num_of_cubes: u32 = cube_count.next().expect("CUBE COUNT").parse().unwrap();
-                    print!("{} ", num_of_cubes);
                     let cube_colour = cube_count.next();
                     if let Some(colour) = cube_colour {
-                        println!("{:?}", colour);
                         match colour {
                             "blue" => {
                                 if num_of_cubes > BLUE_CUBE_COUNT {
@@ -91,7 +89,6 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                         }
                     }
                 }
-                println!("");
             }
         }
         if valid_cube_count {
@@ -120,7 +117,6 @@ pub fn solve_part_2(input_file_name: &str) -> u32 {
     let lines = reader.lines();
 
     for line in lines {
-        let mut game_id_number: u32 = 0;
         let mut blue_max: u32 = 0;
         let mut green_max: u32 = 0;
         let mut red_max: u32 = 0;
@@ -132,7 +128,6 @@ pub fn solve_part_2(input_file_name: &str) -> u32 {
             let game_id = game_record_parts.next();
             let mut game_id_parts = game_id.expect("GAME ID").split(" ");
             assert_eq!(Some("Game"), game_id_parts.next());
-            game_id_number = game_id_parts.next().expect("ID NUMBER").parse().unwrap();
 
             // Start checking the cube counts in the second game record part.
             let cube_counts = game_record_parts.next();
@@ -146,10 +141,8 @@ pub fn solve_part_2(input_file_name: &str) -> u32 {
                     let mut cube_count = cubes_in_one_colour.split(" ");
                     cube_count.next(); // Hack to get rid of initial empty part.
                     let num_of_cubes: u32 = cube_count.next().expect("CUBE COUNT").parse().unwrap();
-                    print!("{} ", num_of_cubes);
                     let cube_colour = cube_count.next();
                     if let Some(colour) = cube_colour {
-                        println!("{:?}", colour);
                         match colour {
                             "blue" => {
                                 if num_of_cubes > blue_max {
@@ -170,7 +163,6 @@ pub fn solve_part_2(input_file_name: &str) -> u32 {
                         }
                     }
                 }
-                println!("");
             }
         }
         result += blue_max * green_max * red_max;
