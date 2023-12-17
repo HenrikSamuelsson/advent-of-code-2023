@@ -5,11 +5,16 @@ fn main() {
 }
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
-    // Create a path to the desired file
     let lines = lines_from_file(input_file_name);   
-    for (i, line) in lines.iter().enumerate() {
+    for (y, line) in lines.iter().enumerate() {
         println!("{:?}", line);
-        println!("{}", i);
+        for (x, c) in line.chars().enumerate() {
+            if !c.is_numeric() {
+                if c != '.' {
+                    println!("{} {} {}", c, x, y);
+                }
+            }
+        }
     }
     0
 }
