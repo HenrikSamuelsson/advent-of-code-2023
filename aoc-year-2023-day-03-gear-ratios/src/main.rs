@@ -1,6 +1,4 @@
-use std::{io::{BufRead, Lines, Read}, io::BufReader, path::{Path, PathBuf}, fs::File, error::Error};
-
-
+use std::{io::BufRead, io::BufReader, path::Path, fs::File};
 
 fn main() {
     solve_part_1("example-puzzle-input.txt");
@@ -8,7 +6,7 @@ fn main() {
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
     // Create a path to the desired file
-    let lines = lines_from_file("example-puzzle-input.txt");   
+    let lines = lines_from_file(input_file_name);   
     for line in lines {
         println!("{:?}", line);
     }
@@ -22,7 +20,7 @@ fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
         .map(|l| l.expect("Could not parse line"))
         .collect()
 }
-
+ 
 #[test]
 fn test_solve_part_1() {
     assert_eq!(solve_part_1(&"example-puzzle-input.txt"), 4361)
