@@ -1,25 +1,26 @@
+use std::{io::{BufRead, Lines, Read}, io::BufReader, path::{Path, PathBuf}, fs::File, error::Error};
+
+
 
 fn main() {
+    solve_part_1("example-puzzle-input.txt");
 }
 
-pub fn solve_part_1(_input_file_name: &str) -> u32 {
+pub fn solve_part_1(input_file_name: &str) -> u32 {
     // Create a path to the desired file
-    let path = Path::new(input_file_name);
-
-    // Open the path in read-only mode.
-    let file = match File::open(&path) {
-        Err(why) => panic!(
-            "Could not open input file: {}",
-            <dyn Error>::to_string(&why)
-        ),
-        Ok(file) => file,
-    };
-
-    let mut result: u32 = 0;
-
-    let reader = BufReader::new(file);
-    let lines = reader.lines();
+    let lines = lines_from_file("example-puzzle-input.txt");   
+    for line in lines {
+        println!("{:?}", line);
+    }
     0
+}
+
+fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
+    let file = File::open(filename).expect("no such file");
+    let buf = BufReader::new(file);
+    buf.lines()
+        .map(|l| l.expect("Could not parse line"))
+        .collect()
 }
 
 #[test]
