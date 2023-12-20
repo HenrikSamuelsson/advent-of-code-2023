@@ -39,12 +39,16 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                                 "{} {} {}",
                                 current_number, first_col_of_number, last_col_of_number
                             );
-                            if is_number_adjacent_to_symbol(row, first_col_of_number, last_col_of_number, schematic.clone()) {
-                                println!("Adjacent to symbol");
-                            }
-                            else {
-                                println!("Not adjacent to symbol.");
-                            }
+                                if is_number_adjacent_to_symbol(
+                                    row,
+                                    first_col_of_number,
+                                    last_col_of_number,
+                                    schematic.clone(),
+                                ) {
+                                    println!("Adjacent to symbol");
+                                } else {
+                                    println!("Not adjacent to symbol.");
+                                }
                         }
                     }
                 }
@@ -58,10 +62,14 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                 "{} {} {}",
                 current_number, first_col_of_number, last_col_of_number
             );
-            if is_number_adjacent_to_symbol(row, first_col_of_number, last_col_of_number, schematic.clone()) {
+            if is_number_adjacent_to_symbol(
+                row,
+                first_col_of_number,
+                last_col_of_number,
+                schematic.clone(),
+            ) {
                 println!("Adjacent to symbol");
-            }
-            else {
+            } else {
                 println!("Not adjacent to symbol.");
             }
         }
@@ -77,7 +85,7 @@ fn is_number_adjacent_to_symbol(
 ) -> bool {
     let mut result = false;
     for col in (first_col - 1)..=(last_col + 1) {
-        // Chock the row above.
+        // Check the row above.
         match s.get(&(col, row - 1)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
@@ -86,8 +94,8 @@ fn is_number_adjacent_to_symbol(
             }
             _ => (),
         }
-        // Chock the row below.
-        match s.get(&(col, row - 1)) {
+        // Check the row below.
+        match s.get(&(col, row + 1)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
                     result = true
@@ -105,9 +113,9 @@ fn is_number_adjacent_to_symbol(
             _ => (),
         }
         // Check to the right.
-        match s.get(&(col + 1, row)) {
+        match s.get(&(last_col + 1, row)) {
             Some(&c) => {
-                if c != '.' && c.is_ascii_digit() {
+                if c != '.' && !c.is_ascii_digit() {
                     result = true
                 }
             }
