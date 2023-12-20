@@ -5,7 +5,7 @@ fn main() {
 }
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
-    let result: u32 = 0;
+    let mut result: u32 = 0;
     let schematic = map_schematic(input_file_name);
     // Loop through the schematic backwards.
     for row in (0..10).rev() {
@@ -46,6 +46,7 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                                     schematic.clone(),
                                 ) {
                                     println!("Adjacent to symbol");
+                                    result += current_number;
                                 } else {
                                     println!("Not adjacent to symbol.");
                                 }
@@ -69,6 +70,7 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                 schematic.clone(),
             ) {
                 println!("Adjacent to symbol");
+                result += current_number;
             } else {
                 println!("Not adjacent to symbol.");
             }
@@ -103,7 +105,7 @@ fn is_number_adjacent_to_symbol(
             }
             _ => (),
         }
-        // Check to the left.
+        // Check to the left on the row.
         match s.get(&(first_col - 1, row)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
@@ -112,7 +114,7 @@ fn is_number_adjacent_to_symbol(
             }
             _ => (),
         }
-        // Check to the right.
+        // Check to the right on the row.
         match s.get(&(last_col + 1, row)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
