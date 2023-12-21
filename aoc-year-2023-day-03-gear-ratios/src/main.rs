@@ -1,20 +1,21 @@
 use std::{collections::HashMap, fs::File, io::BufRead, io::BufReader, path::Path};
 
 fn main() {
-    solve_part_1("example-puzzle-input.txt");
+    let result_part_1 = solve_part_1("personal-puzzle-input.txt");
+    println!("{}", result_part_1);
 }
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
     let mut result: u32 = 0;
     let schematic = map_schematic(input_file_name);
     // Loop through the schematic backwards.
-    for row in (0..10).rev() {
+    for row in (0..140).rev() {
         let mut char_part_of_number: bool = false;
         let mut current_number = 0;
         let mut multiplier = 1;
         let mut first_col_of_number;
         let mut last_col_of_number = 0;
-        for col in (0..10).rev() {
+        for col in (0..140).rev() {
             match schematic.get(&(col, row)) {
                 Some(&c) => {
                     // If finding an ascii digit this shall be parsed into corresponding integer.
@@ -39,17 +40,17 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                                 "{} {} {}",
                                 current_number, first_col_of_number, last_col_of_number
                             );
-                                if is_number_adjacent_to_symbol(
-                                    row,
-                                    first_col_of_number,
-                                    last_col_of_number,
-                                    schematic.clone(),
-                                ) {
-                                    println!("Adjacent to symbol");
-                                    result += current_number;
-                                } else {
-                                    println!("Not adjacent to symbol.");
-                                }
+                            if is_number_adjacent_to_symbol(
+                                row,
+                                first_col_of_number,
+                                last_col_of_number,
+                                schematic.clone(),
+                            ) {
+                                println!("Adjacent to symbol");
+                                result += current_number;
+                            } else {
+                                println!("Not adjacent to symbol.");
+                            }
                         }
                     }
                 }
@@ -127,6 +128,19 @@ fn is_number_adjacent_to_symbol(
     result
 }
 
+/// Reads puzzle input from a file into a vector of strings.
+/// Each string in the vector represents one line of input.
+fn read_input_file(filename: impl AsRef<Path>) -> Vec<String> {
+    let file = File::open(filename).expect("no such file");
+    let buf = BufReader::new(file);
+    // Collect each input line into a vector.
+    let lines: Vec<String> = buf
+        .lines()
+        .map(|l| l.expect("Could not parse line"))
+        .collect();
+    lines
+}
+
 /// Read the complete engine schematic from file into a map.
 fn map_schematic(filename: impl AsRef<Path>) -> HashMap<(i32, i32), char> {
     let file = File::open(filename).expect("no such file");
@@ -151,4 +165,19 @@ fn map_schematic(filename: impl AsRef<Path>) -> HashMap<(i32, i32), char> {
 #[test]
 fn test_solve_part_1() {
     assert_eq!(solve_part_1(&"example-puzzle-input.txt"), 4361)
+}
+
+#[test]
+fn test_read_input_file() {
+    let lines: Vec<String> = read_input_file("example-puzzle-input.txt");
+    assert_eq!(lines[0], "467..114..");
+    assert_eq!(lines[1], "...*......");
+    assert_eq!(lines[2], "..35..633.");
+    assert_eq!(lines[3], "......#...");
+    assert_eq!(lines[4], "617*......");
+    assert_eq!(lines[5], ".....+.58.");
+    assert_eq!(lines[6], "..592.....");
+    assert_eq!(lines[7], "......755.");
+    assert_eq!(lines[8], "...$.*....");
+    assert_eq!(lines[9], ".664.598..");
 }
