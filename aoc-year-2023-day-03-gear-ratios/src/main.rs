@@ -2,7 +2,7 @@ use std::{collections::HashMap, fs::File, io::BufRead, io::BufReader, path::Path
 
 fn main() {
     let result_part_1 = solve_part_1("personal-puzzle-input.txt");
-    println!("{}", result_part_1);
+    println!("Answer part = {}", result_part_1);
 }
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
@@ -39,20 +39,13 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                             // Have moved beyond the last digit in current engine part number.
                             char_part_of_number = false;
                             first_col_of_number = col + 1;
-                            println!(
-                                "{} {} {}",
-                                current_number, first_col_of_number, last_col_of_number
-                            );
                             if is_number_adjacent_to_symbol(
                                 row,
                                 first_col_of_number,
                                 last_col_of_number,
                                 schematic.clone(),
                             ) {
-                                println!("Adjacent to symbol");
                                 result += current_number;
-                            } else {
-                                println!("Not adjacent to symbol.");
                             }
                         }
                     }
@@ -63,20 +56,13 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
         if char_part_of_number {
             // Special case that a number is at the end of a line
             first_col_of_number = 0;
-            println!(
-                "{} {} {}",
-                current_number, first_col_of_number, last_col_of_number
-            );
             if is_number_adjacent_to_symbol(
                 row,
                 first_col_of_number,
                 last_col_of_number,
                 schematic.clone(),
             ) {
-                println!("Adjacent to symbol");
                 result += current_number;
-            } else {
-                println!("Not adjacent to symbol.");
             }
         }
     }
