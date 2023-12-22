@@ -134,11 +134,11 @@ fn read_input_file(filename: impl AsRef<Path>) -> Vec<String> {
     let file = File::open(filename).expect("no such file");
     let buf = BufReader::new(file);
     // Collect each input line into a vector.
-    let lines: Vec<String> = buf
+    let rows: Vec<String> = buf
         .lines()
         .map(|l| l.expect("Could not parse line"))
         .collect();
-    lines
+    rows
 }
 
 /// Read the complete engine schematic from file into a map.
@@ -162,6 +162,11 @@ fn map_schematic(filename: impl AsRef<Path>) -> HashMap<(i32, i32), char> {
     engine_parts_map
 }
 
+/// Gets the number of rows of input, from vector with rows of input 
+fn number_of_rows_of_input(rows: Vec<String>) -> usize {
+    rows.len()
+}
+
 #[test]
 fn test_solve_part_1() {
     assert_eq!(solve_part_1(&"example-puzzle-input.txt"), 4361)
@@ -169,15 +174,15 @@ fn test_solve_part_1() {
 
 #[test]
 fn test_read_input_file() {
-    let lines: Vec<String> = read_input_file("example-puzzle-input.txt");
-    assert_eq!(lines[0], "467..114..");
-    assert_eq!(lines[1], "...*......");
-    assert_eq!(lines[2], "..35..633.");
-    assert_eq!(lines[3], "......#...");
-    assert_eq!(lines[4], "617*......");
-    assert_eq!(lines[5], ".....+.58.");
-    assert_eq!(lines[6], "..592.....");
-    assert_eq!(lines[7], "......755.");
-    assert_eq!(lines[8], "...$.*....");
-    assert_eq!(lines[9], ".664.598..");
+    let rows: Vec<String> = read_input_file("example-puzzle-input.txt");
+    assert_eq!(rows[0], "467..114..");
+    assert_eq!(rows[1], "...*......");
+    assert_eq!(rows[2], "..35..633.");
+    assert_eq!(rows[3], "......#...");
+    assert_eq!(rows[4], "617*......");
+    assert_eq!(rows[5], ".....+.58.");
+    assert_eq!(rows[6], "..592.....");
+    assert_eq!(rows[7], "......755.");
+    assert_eq!(rows[8], "...$.*....");
+    assert_eq!(rows[9], ".664.598..");
 }
