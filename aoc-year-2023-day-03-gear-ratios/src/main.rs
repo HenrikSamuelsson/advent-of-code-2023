@@ -8,8 +8,9 @@ fn main() {
 pub fn solve_part_1(input_file_name: &str) -> u32 {
     let mut result: u32 = 0;
     let schematic = map_schematic(input_file_name);
-    let input_rows = read_input_file(input_file_name);
-    let row_count = number_of_rows_of_input(input_rows);
+    let input_rows = read_input_file(&input_file_name);
+    let row_count = number_of_rows_of_input(&input_rows);
+    let col_count = number_of_cols_of_input(&input_rows);
     // Loop through the schematic backwards.
     for row in (0..row_count).rev() {
         let mut char_part_of_number: bool = false;
@@ -17,7 +18,7 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
         let mut multiplier = 1;
         let mut first_col_of_number;
         let mut last_col_of_number = 0;
-        for col in (0..140).rev() {
+        for col in (0..col_count).rev() {
             match schematic.get(&(col, row)) {
                 Some(&c) => {
                     // If finding an ascii digit this shall be parsed into corresponding integer.
@@ -165,8 +166,22 @@ fn map_schematic(filename: impl AsRef<Path>) -> HashMap<(i32, i32), char> {
 }
 
 /// Gets the number of rows of input, from vector with rows of input 
-fn number_of_rows_of_input(rows: Vec<String>) -> i32 {
+fn number_of_rows_of_input(rows: &Vec<String>) -> i32 {
     rows.len().try_into().unwrap()
+}
+
+/// Gets the number columns in the input.
+/// Input is likely always the same number of columns but to be sure each row of input is checked
+/// and the longest row determines the number of columns.
+fn number_of_cols_of_input(rows: &Vec<String>) -> i32 {
+    let mut cols: i32 = 0;
+    for row in rows {
+        let col = row.len().try_into().unwrap();
+        if cols < col {
+            cols = col;
+        }
+    }
+    cols
 }
 
 #[test]
@@ -192,5 +207,11 @@ fn test_read_input_file() {
 #[test]
 fn test_number_of_rows_of_input() {
     let rows: Vec<String> = read_input_file("example-puzzle-input.txt");
-    assert_eq!(number_of_rows_of_input(rows), 10);
+    assert_eq!(number_of_rows_of_input(&rows), 10);
+}
+
+#[test]
+fn test_number_of_cols_input() {
+    let rows: Vec<String> = read_input_file("example-puzzle-input.txt");
+    assert_eq!(number_of_cols_of_input(&rows), 10);
 }
