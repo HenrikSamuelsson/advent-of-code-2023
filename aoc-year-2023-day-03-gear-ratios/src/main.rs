@@ -8,8 +8,10 @@ fn main() {
 pub fn solve_part_1(input_file_name: &str) -> u32 {
     let mut result: u32 = 0;
     let schematic = map_schematic(input_file_name);
+    let input_rows = read_input_file(input_file_name);
+    let row_count = number_of_rows_of_input(input_rows);
     // Loop through the schematic backwards.
-    for row in (0..140).rev() {
+    for row in (0..row_count).rev() {
         let mut char_part_of_number: bool = false;
         let mut current_number = 0;
         let mut multiplier = 1;
@@ -163,8 +165,8 @@ fn map_schematic(filename: impl AsRef<Path>) -> HashMap<(i32, i32), char> {
 }
 
 /// Gets the number of rows of input, from vector with rows of input 
-fn number_of_rows_of_input(rows: Vec<String>) -> usize {
-    rows.len()
+fn number_of_rows_of_input(rows: Vec<String>) -> i32 {
+    rows.len().try_into().unwrap()
 }
 
 #[test]
@@ -185,4 +187,10 @@ fn test_read_input_file() {
     assert_eq!(rows[7], "......755.");
     assert_eq!(rows[8], "...$.*....");
     assert_eq!(rows[9], ".664.598..");
+}
+
+#[test]
+fn test_number_of_rows_of_input() {
+    let rows: Vec<String> = read_input_file("example-puzzle-input.txt");
+    assert_eq!(number_of_rows_of_input(rows), 10);
 }
