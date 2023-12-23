@@ -6,7 +6,9 @@ fn main() {
 }
 
 pub fn solve_part_1(input_file_name: &str) -> u32 {
+    let mut gears: HashMap<(i32, i32), (u32, u32)> = HashMap::new();
     let mut result: u32 = 0;
+    let mut reuslt1: u32 = 0;
     let schematic = map_schematic(input_file_name);
     let input_rows = read_input_file(&input_file_name);
     let row_count = number_of_rows_of_input(&input_rows);
@@ -44,6 +46,7 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                                 first_col_of_number,
                                 last_col_of_number,
                                 schematic.clone(),
+                                &gears
                             ) {
                                 result += current_number;
                             }
@@ -61,6 +64,7 @@ pub fn solve_part_1(input_file_name: &str) -> u32 {
                 first_col_of_number,
                 last_col_of_number,
                 schematic.clone(),
+                &gears,
             ) {
                 result += current_number;
             }
@@ -74,6 +78,7 @@ fn is_number_adjacent_to_symbol(
     first_col: i32,
     last_col: i32,
     s: HashMap<(i32, i32), char>,
+    g: &HashMap<(i32, i32), (u32, u32)>
 ) -> bool {
     let mut result = false;
     for col in (first_col - 1)..=(last_col + 1) {
@@ -81,6 +86,9 @@ fn is_number_adjacent_to_symbol(
         match s.get(&(col, row - 1)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
+                    if c == "*" {
+                        update_gear_map(&g, col, row - 1);
+                    }
                     result = true
                 }
             }
@@ -90,6 +98,9 @@ fn is_number_adjacent_to_symbol(
         match s.get(&(col, row + 1)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
+                    if c == "*" {
+                        update_gear_map(&g, col, row + 1);
+                    }
                     result = true
                 }
             }
@@ -99,6 +110,9 @@ fn is_number_adjacent_to_symbol(
         match s.get(&(first_col - 1, row)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
+                    if c == "*" {
+                        update_gear_map(&g, first_col - 1, row);
+                    }
                     result = true
                 }
             }
@@ -108,6 +122,9 @@ fn is_number_adjacent_to_symbol(
         match s.get(&(last_col + 1, row)) {
             Some(&c) => {
                 if c != '.' && !c.is_ascii_digit() {
+                    if c == "*" {
+                        update_gear_map(&g, last_col + 1, row);
+                    }
                     result = true
                 }
             }
@@ -169,6 +186,12 @@ fn number_of_cols_of_input(rows: &Vec<String>) -> i32 {
     }
     cols
 }
+
+fn update_gear_map(g: &HashMap<(i32, i32), (u32, u32)>, col: i32, row: i32, number: u32) {
+    println!("{}", col);
+
+}
+
 
 #[test]
 fn test_solve_part_1() {
