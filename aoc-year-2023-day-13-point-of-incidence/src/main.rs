@@ -23,15 +23,20 @@ fn read_input_file(filename: impl AsRef<Path>) -> Vec<String> {
 #[test]
 fn test_read_input_file() {
     let rows: Vec<String> = read_input_file("example-puzzle-input.txt");
-    assert_eq!(rows[0], "467..114..");
-    assert_eq!(rows[1], "...*......");
-    assert_eq!(rows[2], "..35..633.");
-    assert_eq!(rows[3], "......#...");
-    assert_eq!(rows[4], "617*......");
-    assert_eq!(rows[5], ".....+.58.");
-    assert_eq!(rows[6], "..592.....");
-    assert_eq!(rows[7], "......755.");
-    assert_eq!(rows[8], "...$.*....");
-    assert_eq!(rows[9], ".664.598..");
+    assert_eq!(rows[0], "#.##..##.");
+    assert_eq!(rows[1], "..#.##.#.");
+    assert_eq!(rows[2], "##......#");
+    assert_eq!(rows[3], "##......#");
+    assert_eq!(rows[4], "..#.##.#.");
+    assert_eq!(rows[5], "..##..##.");
+    assert_eq!(rows[6], "#.#.##.#.");
+    assert_eq!(rows[7], "");
+    assert_eq!(rows[8], "#...##..#");
+    assert_eq!(rows[9], "#....#..#");
+    assert_eq!(rows[10], "..##..###");
+    assert_eq!(rows[11], "#####.##.");
+    assert_eq!(rows[12], "#####.##.");
+    assert_eq!(rows[13], "..##..###");
+    assert_eq!(rows[14], "#....#..#");
+    assert_eq!(rows.len(), 15);
 }
-
