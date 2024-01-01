@@ -9,4 +9,5 @@ members = [
     "aoc-year-2023-day-05-if-you-give-a-seed-a-fertilizer",
     "aoc-year-2023-day-06-wait-for-it",
     "aoc-year-2023-day-13-point-of-incidence",
+    "aoc-year-2023-day-14-parabolic-reflector-dish",
 ]
