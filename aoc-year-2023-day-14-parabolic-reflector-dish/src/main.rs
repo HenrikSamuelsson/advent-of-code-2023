@@ -1,10 +1,23 @@
-use std::{io::{BufReader, BufRead}, fs::File, path::Path};
+use std::{io::{BufReader, BufRead}, fs::File, path::Path, collections::HashMap};
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+struct Grid {
+    grid: Vec<Vec<char>>,
+}
 
 fn main() {
-    let input = std::fs::read_to_string("example-puzzle-input.txt").unwrap();
+    let result_part_1 = solve_part_1("example-puzzle-input.txt");
+    println!("Result part 1 = {}", result_part_1);
 }
 
 fn solve_part_1(input_file_name: &str) -> i32 {
+    let rock_rows: Vec<String> = read_input_file(input_file_name);
+    let mut rocks_map: HashMap<(i32, i32), char> = HashMap::new();
+    for (y, row) in rock_rows.iter().enumerate() {
+        for (x, c) in row.chars().enumerate() {
+            rocks_map.insert((x.try_into().unwrap(), y.try_into().unwrap()), c);
+        }
+    }
     0
 }
 
